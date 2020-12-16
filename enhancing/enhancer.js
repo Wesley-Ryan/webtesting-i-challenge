@@ -15,8 +15,10 @@ module.exports = {
 };
 
 function success(item) {
-  // a success(item) method that accepts an item object and returns a new item object modified according to the rules defined by the client for enhancement success.
-  return { ...item };
+  if (item.enhancement < 20) item.enhancement++;
+  return {
+    ...item,
+  };
 }
 
 function fail(item) {

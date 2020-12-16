@@ -1,13 +1,10 @@
 const enhancer = require("./enhancer.js");
-// test away!
+
 describe("Sanity check", () => {
   it("works", () => {
-    // THIS is the test
-    // assertions
     expect(2 + 2).toBe(4);
   });
 });
-// Tests
 
 describe("Verify Item Requirements", () => {
   const itemCreator = enhancer.Item;
@@ -18,18 +15,33 @@ describe("Verify Item Requirements", () => {
   it("Item can be created and named", () => {
     expect(item.name).toBe("milk");
   });
+
   it("Item has name, durability, enhancement", () => {
     expect(item).toMatchObject({ name: "milk", durability: 0, enhancement: 0 });
   });
+
+  it("The item's enhancement it's a number from 0 to 20", () => {
+    expect(item.enhancement).toBeLessThanOrEqual(20);
+  });
+  it("The item's durability it's a number from 0 to 100", () => {
+    expect(item.durability).toBeLessThanOrEqual(100);
+  });
 });
 
-// Items have name, durability and enhancement.
-// The item's enhancement it's a number from 0 to 20.
-// The item's durability it's a number from 0 to 100.
+describe("When enhancement succeeds", () => {
+  const itemCreator = enhancer.Item;
+  let item;
+  beforeEach(() => {
+    item = new itemCreator("milk");
+  });
+  it("The item's enhancement increases by 1", () => {
+    enhancer.success(item);
+    expect(item.enhancement).toBe(1);
+  });
+});
+//
 
-// When enhancement succeeds
-
-// The item's enhancement increases by 1.
+// .
 // If the item enhancement level is 20, the enhancement level is not changed.
 // The durability of the item is not changed.
 
