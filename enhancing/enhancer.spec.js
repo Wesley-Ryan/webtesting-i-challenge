@@ -38,12 +38,13 @@ describe("When enhancement succeeds", () => {
     enhancer.success(item);
     expect(item.enhancement).toBe(1);
   });
+  it("The item's enhancement does not surpass 20", () => {
+    item.enhancement = 20;
+    enhancer.success(item);
+    expect(item.enhancement).toBe(20);
+  });
 });
 //
-
-// .
-// If the item enhancement level is 20, the enhancement level is not changed.
-// The durability of the item is not changed.
 
 // When enhancement fails
 
