@@ -26,6 +26,10 @@ describe("Verify Item Requirements", () => {
   it("The item's durability it's a number from 0 to 100", () => {
     expect(item.durability).toBeLessThanOrEqual(100);
   });
+  it("Resets durability", () => {
+    enhancer.repair(item);
+    expect(item.durability).toBe(100);
+  });
 });
 
 describe("When enhancement succeeds", () => {
@@ -44,10 +48,32 @@ describe("When enhancement succeeds", () => {
     expect(item.enhancement).toBe(20);
   });
 });
-//
 
-// When enhancement fails
-
-// If the item's enhancement is less than 15, the durability of the item is decreased by 5.
-// If the item's enhancement is 15 or more, the durability of the item is decreased by 10.
-// If the item's enhancement level is greater than 16, the enhancement level decreases by 1 (17 goes down to 16, 18 goes down to 17)
+describe("When enhancement fails", () => {
+  const itemCreator = enhancer.Item;
+  let item;
+  beforeEach(() => {
+    item = new itemCreator("milk");
+  });
+  it("If the item's enhancement is less than 15, the durability of the item is decreased by 5", () => {
+    item = {
+      enhancement: 14,
+      durability: 11,
+    };
+    enhancer.fail(item);
+    expect(item.durability).toBe(6);
+  });
+  it("If the item's enhancement is 15 or more, the durability of the item is decreased by 10", () => {
+    item = {
+      enhancement: 19,
+      durability: 11,
+    };
+    enhancer.fail(item);
+    expect(item.durability).toBe(1);
+  });
+  it("If the item's enhancement level is greater than 16, the enhancement level decreases by 1", () => {
+    item.enhancement = 19;
+    enhancer.fail(item);
+    expect(item.enhancement).toBe(18);
+  });
+});

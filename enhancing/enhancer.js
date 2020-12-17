@@ -15,19 +15,26 @@ module.exports = {
 };
 
 function success(item) {
-  if (item.enhancement < 20) item.enhancement++;
+  if (item.enhancement < 20) item.enhancement += 1;
   return {
     ...item,
   };
 }
 
 function fail(item) {
-  // a fail(item) method that accepts an item object and returns a new item object modified according to the rules defined by the client for enhancement failure.
+  if (item.enhancement > 16) {
+    item.enhancement -= 1;
+    item.durability -= 10;
+  } else if (item.enhancement >= 15) {
+    item.durability -= 10;
+  } else {
+    item.durability -= 5;
+  }
   return { ...item };
 }
 
 function repair(item) {
-  // a repair(item) method that accepts an item object and returns a new item with the durability restored to 100. This method is the simplest of the three and would be a good starting point on this project.
+  item.durability = 100;
   return { ...item };
 }
 
